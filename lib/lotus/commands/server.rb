@@ -16,6 +16,7 @@ module Lotus
     #
     # @since 0.1.0
     # @api private
+
     class Server < ::Rack::Server
       attr_reader :options
 
@@ -27,6 +28,13 @@ module Lotus
           require 'shotgun'
           @app = Shotgun::Loader.new(@_env.rackup.to_s)
         end
+
+        if options[:experimental_reloading]
+          puts "============================================="
+          puts "==================hello world================"
+          puts "============================================="
+        end
+
       end
 
       # Primarily this removes the ::Rack::Chunked middleware
@@ -60,6 +68,7 @@ module Lotus
       def code_reloading?
         @_env.code_reloading?
       end
+
     end
   end
 end

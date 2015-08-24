@@ -1,7 +1,6 @@
 require 'test_helper'
 require 'lotus/environment'
 require 'lotus/commands/server'
-
 describe Lotus::Commands::Server do
   let(:opts) { Hash.new }
 
@@ -22,14 +21,12 @@ describe Lotus::Commands::Server do
         'development' => [::Rack::ContentLength, ::Rack::CommonLogger,
                           ::Rack::ShowExceptions, Rack::Lint]
       }
-
       @server.middleware.must_equal(expected)
     end
   end
 
   describe '#options' do
     let(:opts) { { port: "3005", host: 'example.com' } }
-
     it 'sets the options correctly for rack' do
       @server.options[:Port].must_equal 3005
       @server.options[:Host].must_equal "example.com"
@@ -283,6 +280,14 @@ describe Lotus::Commands::Server do
       it "doesn't use Shotgun" do
         @server.instance_variable_get(:@app).must_be_nil
       end
+    end
+  end
+
+  describe 'experimental reloading' do
+    let(:opts) {Hash[experimental_reloading: true]}
+
+    it 'uses Shotgun to wrap the application' do
+      @server.options.fetch(:experimental_reloading).must_equal true
     end
   end
 end

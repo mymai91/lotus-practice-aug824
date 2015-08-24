@@ -23,6 +23,7 @@ module Lotus
     method_option :environment,              desc: 'path to environment configuration (config/environment.rb)'
     method_option :code_reloading,           desc: 'code reloading', type: :boolean, default: true
     method_option :help,      aliases: '-h', desc: 'displays the usage message'
+    method_option :experimental_reloading,   desc: 'reloading code', type: :boolean, default: true
 
     def server
       if options[:help]
